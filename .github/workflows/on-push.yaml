@@ -4,14 +4,12 @@ on:
   push:
   workflow_dispatch:
     inputs:
-      ENV_VARIABLE_INPUT:
-        default: "default-STRING_INPUT"
-      OTHER_ENV_VARIABLE_INPUT:
-        default: "default-SOME_VARIABLE_INPUT"
+      ENV_VARIABLE:
+      OTHER_ENV_VARIABLE:
 
 env:
-  ENV_VARIABLE: ${{ inputs.STRING_INPUT || 'default-ENV_VARIABLE' }}
-  OTHER_ENV_VARIABLE: ${{ inputs.SOME_VARIABLE_INPUT || 'default-OTHER_ENV_VARIABLE' }}
+  ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
+  OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
 
 jobs:
   run-some-job:
@@ -22,14 +20,12 @@ jobs:
         run: |
           echo "[DIRECT_JOB] ${{ env.ENV_VARIABLE }}"
           echo "[DIRECT_JOB] ${{ env.OTHER_ENV_VARIABLE }}"
-          echo "[DIRECT_JOB] ${{ inputs.ENV_VARIABLE_INPUT }}"
           echo "[DIRECT_JOB] ${{ secrets.SUPER_SECRET }}"
 
   run-template:
     uses: ./.github/workflows/template.yaml
-    env:
-      ENVIR: ${{ env }}
     with:
-      INPUT: '${{ toJSON(inputs) }}'
+      ENV_VARIABLE: ${{ env.ENV_VARIABLE }}
+      OTHER_ENV_VARIABLE: ${{ env.OTHER_ENV_VARIABLE }}
     secrets:
-      SECRET: '${{ toJSON(secrets) }}'
+      ALL_SECRETS: '${{ toJSON(secrets) }}'
