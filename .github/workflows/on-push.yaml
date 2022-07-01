@@ -7,10 +7,6 @@ on:
       ENV_VARIABLE:
       OTHER_ENV_VARIABLE:
 
-env:
-  ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
-  OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
-
 jobs:
   run-some-job:
     runs-on: ubuntu-latest
@@ -25,7 +21,14 @@ jobs:
   run-template:
     uses: ./.github/workflows/template.yaml
     with:
-      ENV_VARIABLE: ${{ env.ENV_VARIABLE }}
-      OTHER_ENV_VARIABLE: ${{ env.OTHER_ENV_VARIABLE }}
+      ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
+      OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
     secrets:
       ALL_SECRETS: '${{ toJSON(secrets) }}'
+
+  run-template-inherited:
+    uses: ./.github/workflows/template-with-inherited-secrets.yaml
+    with:
+      ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
+      OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
+    secrets: inherit
