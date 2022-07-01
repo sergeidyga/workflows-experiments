@@ -5,6 +5,7 @@ on:
     inputs:
       INPUT:
         type: string
+        required: false
     secrets:
       SECRET:
         required: false
@@ -18,7 +19,3 @@ jobs:
         run: |
           echo "[INPUT] ${{ inputs.INPUT }}"
           echo "[SECRET] ${{ secrets.SECRET }}"
-          echo "[TEMPLATE] $SOME_VARIABLE"
-          echo "[TEMPLATE] $STRING_INPUT"
-          echo "[TEMPLATE] ${{ secrets.SUPER_SECRET }}"
-          echo "[TEMPLATE] ${{ secrets }}"
