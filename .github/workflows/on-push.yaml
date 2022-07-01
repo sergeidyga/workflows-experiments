@@ -1,8 +1,7 @@
-name: on-push
+name: on-push-and-dispatch
 
 env:
   SOME_VARIABLE: 123-from-some-variable
-  FROM_SECRET: ${{ secrets.SUPER_SECRET }}
 
 on:
   push:
@@ -19,6 +18,12 @@ jobs:
         run: |
           echo "[DIRECT_JOB] $SOME_VARIABLE"
           echo "[DIRECT_JOB] $STRING_INPUT"
-          echo "[DIRECT_JOB] $FROM_SECRET"
           echo "[DIRECT_JOB] ${{ secrets.SUPER_SECRET }}"
           echo "[DIRECT_JOB] ${{ secrets }}"
+
+  run-template:
+    uses: ./.github/workflows/template.yaml
+    with:
+      INPUT: '${{ toJSON(inputs) }}'
+    secrets:
+      SECRET: '${{ toJSON(secrets) }}'
