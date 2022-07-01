@@ -1,0 +1,16 @@
+name: "template"
+
+on:
+  workflow_call:
+
+jobs:
+  template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Echo
+        run: |
+          echo "[TEMPLATE] $SOME_VARIABLE"
+          echo "[TEMPLATE] $FROM_SECRET"
+          echo "[TEMPLATE] ${{ secrets.SUPER_SECRET }}"
+          echo "[TEMPLATE] ${{ inputs }}"

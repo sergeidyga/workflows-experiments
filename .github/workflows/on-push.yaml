@@ -1,0 +1,24 @@
+name: on-push
+
+env:
+  SOME_VARIABLE: 123-from-some-variable
+  FROM_SECRET: ${{ secrets.SUPER_SECRET }}
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      STRING_INPUT:
+
+jobs:
+  run-some-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Echo
+        run: |
+          echo "[DIRECT_JOB] $SOME_VARIABLE"
+          echo "[DIRECT_JOB] $STRING_INPUT"
+          echo "[DIRECT_JOB] $FROM_SECRET"
+          echo "[DIRECT_JOB] ${{ secrets.SUPER_SECRET }}"
+          echo "[DIRECT_JOB] ${{ secrets }}"
