@@ -17,6 +17,9 @@ jobs:
           echo "[DIRECT_JOB] ${{ env.ENV_VARIABLE }}"
           echo "[DIRECT_JOB] ${{ env.OTHER_ENV_VARIABLE }}"
           echo "[DIRECT_JOB] ${{ secrets.SUPER_SECRET }}"
+          echo '### 1. Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
+      - name: Adding markdown
+        run: echo '### 2. Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
 
   run-template:
     uses: ./.github/workflows/template.yaml

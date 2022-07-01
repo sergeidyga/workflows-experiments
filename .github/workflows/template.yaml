@@ -27,3 +27,5 @@ jobs:
           echo '${{ fromJSON(secrets.ALL_SECRETS).SUPER_SECRET }}'
           echo $SUPER_SECRET
           echo "inherited ${{ secrets.SUPER_SECRET }}"
+      - name: Adding markdown
+        run: echo '### 3. Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
