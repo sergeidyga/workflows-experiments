@@ -7,6 +7,10 @@ on:
       ENV_VARIABLE:
       OTHER_ENV_VARIABLE:
 
+env:
+  IS_MASTER: ${{ github.ref != refs/heads/master }}
+  IS_NOT_MASTER: ${{ github.ref != refs/heads/master }}
+
 jobs:
   run-some-job:
     runs-on: ubuntu-latest
@@ -14,6 +18,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Echo
         run: |
+          echo "[IS_MASTER] ${{ env.IS_MASTER }}"
+          echo "[IS_NOT_MASTER] ${{ env.IS_NOT_MASTER }}"
           echo "[DIRECT_JOB] ${{ env.ENV_VARIABLE }}"
           echo "[DIRECT_JOB] ${{ env.OTHER_ENV_VARIABLE }}"
           echo "[DIRECT_JOB] ${{ secrets.SUPER_SECRET }}"
