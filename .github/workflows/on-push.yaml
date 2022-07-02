@@ -1,9 +1,14 @@
-name: on-push-and-dispatch
+name: '▷️ Test [development]'
 
 on:
   push:
   workflow_dispatch:
     inputs:
+      SOME_CHOICE:
+        type: choice
+        options:
+          - development
+          - production
       ENV_VARIABLE:
       OTHER_ENV_VARIABLE:
 
@@ -12,10 +17,41 @@ env:
   IS_NOT_MASTER: ${{ github.ref_name != github.event.repository.default_branch }}
 
 jobs:
+  junit-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: mikepenz/action-junit-report@v3
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: './test-results/test/TEST-*.xml'
+          check_name: '⚠️ ${{ github.run_id }} Test Report ⚠️'
+          summary: |
+            ### Keep it up! 🏆💪
+            #### Useful links
+            - Qase Report ► https://example.com/
+            - Slack channel ► [#channel-name](https://example.com/)
+          fail_on_failure: true
+          include_passed: true
+          require_tests: true
+
   run-some-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: mikepenz/action-junit-report@v3
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: './test-results/test/TEST-*.xml'
+          check_name: '⚠️ ${{ github.run_id }} Test Report ⚠️'
+          summary: |
+            ### Keep it up! 🏆💪
+            #### Useful links
+            - Qase Report ► https://example.com/
+            - Slack channel ► [#channel-name](https://example.com/)
+          fail_on_failure: true
+          include_passed: true
+          require_tests: true
       - name: Echo
         run: |
           echo '${{ toJSON(github) }}'
@@ -36,6 +72,7 @@ jobs:
 
   run-template:
     uses: ./.github/workflows/template.yaml
+    if: ${{ inputs.SOME_CHOICE == 'development' || false }}
     with:
       ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
       OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
@@ -44,6 +81,7 @@ jobs:
 
   run-template-inherited:
     uses: ./.github/workflows/template-with-inherited-secrets.yaml
+    if: ${{ inputs.SOME_CHOICE == 'development' || true }}
     with:
       ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
       OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
