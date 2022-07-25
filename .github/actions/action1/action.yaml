@@ -1,0 +1,29 @@
+name: "Action 1"
+description: "The First Action"
+inputs:
+  name:
+    description: 'Your name'
+    required: true
+outputs:
+  time: # id of output
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+    description: 'The time we greeted you'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v1
+    - if: inputs.name == 'John'
+      run: echo Hello John -> ${{ inputs.name }}.
+      shell: bash
+    - if: inputs.name != 'John'
+      run: echo Hello !John -> ${{ inputs.name }}.
+      shell: bash
+    - run: |
+        echo "Nice to meet you! ${{ env.SOME_ENV }}"
+        echo "Nice to meet you! ${MY_VAR}"
+      shell: bash
+      env:
+        MY_VAR: ${{ inputs.name }}
+    - id: random-number-generator
+      run: echo "::set-output name=random-number::$(echo $RANDOM)"
+      shell: bash

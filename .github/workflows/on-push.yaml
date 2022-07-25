@@ -18,6 +18,14 @@ env:
 
 jobs:
 
+  using-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/action1
+        with:
+          name: MrPepper
+
   matrix-template-job:
     uses: ./.github/workflows/matrix-template-with-inherited-secrets.yaml
     with:
@@ -46,7 +54,7 @@ jobs:
       - uses: mikepenz/action-junit-report@v3
         if: always() # always run even if the previous step fails
         with:
-          report_paths: './test-results/test/TEST-*.xml'
+          report_paths: './test-results/test/*.xml'
           check_name: '⚠️ ${{ github.run_id }} Test Report ⚠️'
           summary: |
             ### Keep it up! 🏆💪

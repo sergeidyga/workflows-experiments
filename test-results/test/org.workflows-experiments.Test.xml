@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.workflows-experiments.Test" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-06-29T22:57:03" hostname="org" time="20.051">
+  <properties/>
+  <testcase name="Test 1" classname="org.workflows-experiments.Test" time="12.101"/>
+  <testcase name="Test 2" classname="org.workflows-experiments.Test" time="4.271"/>
+  <testcase name="Test 3" classname="org.workflows-experiments.Test" time="3.659"/>
+  <system-out></system-out>
+  <system-err></system-err>
+</testsuite>
