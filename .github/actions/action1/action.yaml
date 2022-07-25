@@ -12,6 +12,18 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v1
+    - name: Set env variables
+      run: |
+        echo "TRUE_ENV_VARIABLE=true" >> $GITHUB_ENV
+        echo "FALSE_ENV_VARIABLE=false" >> $GITHUB_ENV
+      shell: bash
+    - if: env.TRUE_ENV_VARIABLE == 'true'
+      run: echo 'TRUE_ENV_VARIABLE is true'
+      shell: bash
+    - if: env.FALSE_ENV_VARIABLE == 'true'
+      # not supposed to run
+      run: echo 'FALSE_ENV_VARIABLE is also true (Surprise!)'
+      shell: bash
     - if: inputs.name == 'John'
       run: echo Hello John -> ${{ inputs.name }}.
       shell: bash
