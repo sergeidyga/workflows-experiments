@@ -17,6 +17,13 @@ env:
   IS_NOT_MASTER: ${{ github.ref_name != github.event.repository.default_branch }}
 
 jobs:
+  matrix-template-job:
+    uses: ./.github/workflows/matrix-template-with-inherited-secrets.yaml
+    with:
+      ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
+      OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
+    secrets: inherit
+
   matrix-job:
     strategy:
       max-parallel: 1
