@@ -17,11 +17,15 @@ env:
   IS_NOT_MASTER: ${{ github.ref_name != github.event.repository.default_branch }}
 
 jobs:
+
   matrix-template-job:
     uses: ./.github/workflows/matrix-template-with-inherited-secrets.yaml
     with:
-      ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
-      OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
+      FILTERS: |
+        [
+          "filter1",
+          "filter2",
+        ]
     secrets: inherit
 
   matrix-job:
@@ -30,8 +34,6 @@ jobs:
       matrix:
         MATRIX_VALUE:
           - value-1
-          - 'value 2'
-          - "value 3"
     runs-on: ubuntu-latest
     steps:
       - name: Echo matrix
