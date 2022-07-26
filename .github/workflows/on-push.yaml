@@ -18,14 +18,6 @@ env:
 
 jobs:
 
-  using-action:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./.github/actions/action1
-        with:
-          name: MrPepper
-
   matrix-template-job:
     uses: ./.github/workflows/matrix-template-with-inherited-secrets.yaml
     with:
@@ -36,16 +28,19 @@ jobs:
         ]
     secrets: inherit
 
-  matrix-job:
+  matrix-job-with-my-action:
     strategy:
       max-parallel: 1
       matrix:
-        MATRIX_VALUE:
-          - value-1
+        name:
+          - MtPepper
+          - John
     runs-on: ubuntu-latest
     steps:
-      - name: Echo matrix
-        run: sleep 2 && echo 'MATRIX_VALUE is ${{ matrix.MATRIX_VALUE }}'
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/action1
+        with:
+          name: ${{ matrix.name }}
 
   junit-report:
     runs-on: ubuntu-latest
