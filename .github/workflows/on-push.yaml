@@ -39,8 +39,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/action1
+        env:
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
         with:
           name: ${{ matrix.name }}
+          secret-name: ${{ secrets.SUPER_SECRET }}
 
   junit-report:
     runs-on: ubuntu-latest

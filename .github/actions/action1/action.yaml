@@ -4,6 +4,9 @@ inputs:
   name:
     description: 'Your name'
     required: true
+  secret-name:
+    description: 'Your secret name'
+    required: false
 outputs:
   time: # id of output
     value: ${{ steps.random-number-generator.outputs.random-number }}
@@ -37,4 +40,10 @@ runs:
         MY_VAR: ${{ inputs.name }}
     - id: random-number-generator
       run: echo "::set-output name=random-number::$(echo $RANDOM)"
+      shell: bash
+    - id: secret-name-from-inputs
+      run: echo "secret-name => ${{ inputs.secret-name }}"
+      shell: bash
+    - id: secret-name-from-env
+      run: echo "SUPER_SECRET from env => ${{ env.SUPER_SECRET }}"
       shell: bash
