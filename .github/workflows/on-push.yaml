@@ -37,9 +37,9 @@ jobs:
           - John
     runs-on: ubuntu-latest
     steps:
-      - uses: Bhacaz/checkout-files@v2
+      - uses: sergeidyga/checkout-dirs@v1
         with:
-          files: '.github/actions'
+          dirs: .github/actions
       - uses: ./.github/actions/action1
         env:
           SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
