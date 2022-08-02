@@ -51,6 +51,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Test Summary
+        uses: test-summary/action@v1
+        with:
+          paths: |
+            test-results/test/*.xml
+            test-results/test/*.xml
+        if: always()
+      - name: Upload test summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-summary
+          path: test-summary.md
+        if: always()
       - uses: mikepenz/action-junit-report@v3
         if: always() # always run even if the previous step fails
         with:
