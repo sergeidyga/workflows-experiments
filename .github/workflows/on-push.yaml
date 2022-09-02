@@ -6,11 +6,15 @@ on:
     inputs:
       SOME_CHOICE:
         type: choice
+        required: true
         options:
+          - "everything"
           - development
           - production
       ENV_VARIABLE:
+        required: true
       OTHER_ENV_VARIABLE:
+        required: true
 
 env:
   IS_MASTER: ${{ github.ref_name == github.event.repository.default_branch }}
@@ -83,6 +87,7 @@ jobs:
     steps:
       - name: Echo
         run: |
+          echo "SOME_CHOICE is >${{inputs.SOME_CHOICE == 'everything' && '' || inputs.SOME_CHOICE}}<"
           echo '${{ toJSON(github) }}'
           echo "[DIRECT_JOB] ${{ env.ENV_VARIABLE }}"
           echo "[DIRECT_JOB] ${{ env.OTHER_ENV_VARIABLE }}"
