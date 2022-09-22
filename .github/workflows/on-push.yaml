@@ -4,6 +4,11 @@ on:
   push:
   workflow_dispatch:
     inputs:
+      DISABLE_SOMETHING:
+        type: boolean
+        required: true
+        description: 'Disable something'
+        default: false
       SOME_CHOICE:
         type: choice
         required: true
@@ -104,6 +109,9 @@ jobs:
     uses: ./.github/workflows/template.yaml
     if: ${{ inputs.SOME_CHOICE == 'development' || false }}
     with:
+      DISABLE_SOMETHING_1: ${{ inputs.DISABLE_SOMETHING }}
+      DISABLE_SOMETHING_2: ${{ inputs.DISABLE_SOMETHING == true }}
+      DISABLE_SOMETHING_3: ${{ inputs.DISABLE_SOMETHING == 'true' }}
       ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
       OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
     secrets:

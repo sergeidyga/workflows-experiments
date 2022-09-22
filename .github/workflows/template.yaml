@@ -1,6 +1,12 @@
 on:
   workflow_call:
     inputs:
+      DISABLE_SOMETHING_1:
+        type: boolean
+      DISABLE_SOMETHING_2:
+        type: boolean
+      DISABLE_SOMETHING_3:
+        type: boolean
       ENV_VARIABLE:
         type: string
       OTHER_ENV_VARIABLE:
@@ -10,6 +16,9 @@ on:
 
 env:
   ENV_VARIABLE: ${{ inputs.ENV_VARIABLE }}
+  DISABLE_SOMETHING_1: ${{ inputs.DISABLE_SOMETHING_1 }}
+  DISABLE_SOMETHING_2: ${{ inputs.DISABLE_SOMETHING_2 }}
+  DISABLE_SOMETHING_3: ${{ inputs.DISABLE_SOMETHING_3 }}
   SUPER_SECRET: ${{ fromJSON(secrets.ALL_SECRETS).SUPER_SECRET }}
 
 jobs:
@@ -19,6 +28,12 @@ jobs:
       - uses: actions/checkout@v1
       - name: Echo
         run: |
+          echo "[ENV-DISABLE_SOMETHING_1] $DISABLE_SOMETHING_1"
+          echo "[ENV-DISABLE_SOMETHING_2] $DISABLE_SOMETHING_2"
+          echo "[ENV-DISABLE_SOMETHING_3] $DISABLE_SOMETHING_3"
+          echo "[INPUT-DISABLE_SOMETHING_1] ${{ inputs.DISABLE_SOMETHING_1 }}"
+          echo "[INPUT-DISABLE_SOMETHING_2] ${{ inputs.DISABLE_SOMETHING_2 }}"
+          echo "[INPUT-DISABLE_SOMETHING_3] ${{ inputs.DISABLE_SOMETHING_3 }}"
           echo "[INPUT] $ENV_VARIABLE"
           echo "[INPUT] ${{ inputs.ENV_VARIABLE }}"
           echo "[INPUT] ${{ inputs.OTHER_ENV_VARIABLE }}"
