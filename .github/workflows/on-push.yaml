@@ -111,7 +111,7 @@ jobs:
     with:
       DISABLE_SOMETHING_1: ${{ inputs.DISABLE_SOMETHING }}
       DISABLE_SOMETHING_2: ${{ inputs.DISABLE_SOMETHING == true }}
-      DISABLE_SOMETHING_3: ${{ inputs.DISABLE_SOMETHING == 'true' }}
+      DISABLE_SOMETHING_3: ${{ inputs.DISABLE_SOMETHING == 'true' }} # !!! this is always false. boolean is boolean as expected
       ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
       OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
     secrets:
