@@ -28,6 +28,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Echo
         run: |
+          echo "[ENV-CONTAINS_DEMO_1] $CONTAINS_DEMO_1"
+          echo "[ENV-CONTAINS_DEMO_2] $CONTAINS_DEMO_2"
           echo "[ENV-DISABLE_SOMETHING_1] $DISABLE_SOMETHING_1"
           echo "[ENV-DISABLE_SOMETHING_2] $DISABLE_SOMETHING_2"
           echo "[ENV-DISABLE_SOMETHING_3] $DISABLE_SOMETHING_3"

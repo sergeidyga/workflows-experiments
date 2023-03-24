@@ -92,6 +92,7 @@ jobs:
     steps:
       - name: Echo
         run: |
+          echo "my LIST: ${{ env.LIST }}"
           echo "SOME_CHOICE is >${{inputs.SOME_CHOICE == 'everything' && '' || inputs.SOME_CHOICE}}<"
           echo '${{ toJSON(github) }}'
           echo "[DIRECT_JOB] ${{ env.ENV_VARIABLE }}"
@@ -107,7 +108,7 @@ jobs:
 
   run-template:
     uses: ./.github/workflows/template.yaml
-    if: ${{ inputs.SOME_CHOICE == 'development' || false }}
+    if: ${{ inputs.SOME_CHOICE == 'development' || true }}
     with:
       DISABLE_SOMETHING_1: ${{ inputs.DISABLE_SOMETHING }}
       DISABLE_SOMETHING_2: ${{ inputs.DISABLE_SOMETHING == true }}
@@ -119,8 +120,11 @@ jobs:
 
   run-template-inherited:
     uses: ./.github/workflows/template-with-inherited-secrets.yaml
-    if: ${{ inputs.SOME_CHOICE == 'development' || true }}
     with:
+      CONTAINS_DEMO_1: ${{ contains(
+                           fromJson('["item123", "item2"]'), 
+                           'item1') == false }}
+      CONTAINS_DEMO_2: ${{ contains(fromJson('["item123", "item2"]'), 'item123') == false }}
       ENV_VARIABLE: ${{ inputs.ENV_VARIABLE || 'default-ENV_VARIABLE' }}
       OTHER_ENV_VARIABLE: ${{ inputs.OTHER_ENV_VARIABLE || 'default-OTHER_ENV_VARIABLE' }}
     secrets: inherit
