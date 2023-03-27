@@ -1,5 +1,7 @@
 name: '▷️ Test [development]'
 
+run-name: Deploy to ${{ inputs.SOME_CHOICE }} by @${{ github.actor }}
+
 on:
   push:
   workflow_dispatch:
@@ -92,6 +94,7 @@ jobs:
     steps:
       - name: Echo
         run: |
+          echo "Run-name ${{ github.run-name }}"
           echo "my LIST: ${{ env.LIST }}"
           echo "SOME_CHOICE is >${{inputs.SOME_CHOICE == 'everything' && '' || inputs.SOME_CHOICE}}<"
           echo '${{ toJSON(github) }}'
