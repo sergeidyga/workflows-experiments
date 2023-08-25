@@ -15,6 +15,10 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v1
+    - name: Output github env
+      run: |
+        echo '${{ toJSON(github) }}'
+      shell: bash
     - name: Set env variables
       run: |
         echo "TRUE_ENV_VARIABLE=true" >> $GITHUB_ENV
